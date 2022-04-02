@@ -14,7 +14,7 @@ function TodoItem(props){
   return(
     <li className="TodoItem">
       <span className={`Icon Icon-check ${props.completed && 'Icon-check--active'}`}
-        onClick={onComplete}
+        onClick={props.onComplete}
       >
         <ion-icon name="checkmark-circle-outline"></ion-icon>
       </span>
@@ -22,7 +22,7 @@ function TodoItem(props){
       {props.text}
       </p>
       <span className="Icon Icon-delete"
-        onClick={onDelete}
+        onClick={props.onDelete}
       >
         <ion-icon name="trash-outline"></ion-icon>
       </span>
