@@ -8,16 +8,35 @@ import { CreateTodoButton } from '../components/CreateTodoButton'
 import { AppUI } from './AppUI'
 
 
-const defaultTodos = [
-  { text: 'Leer el libro', completed: false },
-  { text: 'Actualizar tareas del sprint', completed: true },
-  { text: 'Hacer ejercicio', completed: false },
-  { text: 'Citar reunión', completed: true }
-]
+function useLocalStorage(itemName, initialValue) {
+  const localStorageItem = localStorage.getItem(itemName)
+  let parsedItem
+
+  if (!localStorageItem) {
+
+    localStorage.setItem(itemName, JSON.stringify(initialValue))
+    parsedItem = initialValue
+
+  } else {
+    parsedItem = JSON.parse(localStorageItem)
+  }
+
+  const [item, setItem] = React.useState(parsedItem)
+
+  const saveItem = (newItem) => {
+    const stringifiedItem = JSON.stringify(newItem)
+    localStorage.setItem(itemName, stringifiedItem)
+    setItem(newItem)
+  }
+
+  return [
+    item, 
+    saveItem,
+  ]
+}
 
 function App() {
-
-  const [todos, setTodos] = React.useState(defaultTodos)
+  const [todos, saveTodos] = useLocalStorage('TODOS_V1', [])
   const [searchValue, setSearchValue] = React.useState('')
 
   const completedTodos = todos.filter(todo => todo.completed == true).length
@@ -42,7 +61,7 @@ function App() {
     const newTodos = [...todos]
     newTodos[todoIndex].completed = true
 
-    setTodos(newTodos)
+    saveTodos(newTodos)
   }
 
   const deleteTodo = (text) => {
@@ -51,7 +70,7 @@ function App() {
     const newTodos = [...todos]
     newTodos.splice(todoIndex, 1)
 
-    setTodos(newTodos)
+    saveTodos(newTodos)
   }
 
   return (
