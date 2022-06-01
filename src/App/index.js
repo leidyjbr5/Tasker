@@ -9,6 +9,9 @@ import { TodoItem } from '../components/TodoItem'
 import { CreateTodoButton } from '../components/CreateTodoButton'
 import { Modal } from '../components/modal'
 import { TodoForm } from '../components/TodoForm'
+import { EmptyTodos } from '../components/EmptyTodos'
+import { TodosError } from '../components/TodosError'
+import { TodosLoading } from '../components/TodosLoading'
 
 function App() {
 
@@ -29,7 +32,7 @@ function App() {
 
   return (
     <React.Fragment>
-      <TodoHeader>
+      <TodoHeader loading={loading}>
 
         <TodoCounter 
         totalTodos={totalTodos}
@@ -42,7 +45,42 @@ function App() {
         />
       </TodoHeader>
 
-      <TodoList>
+      <TodoList 
+        error={error}
+        loading={loading}
+        searchedTodos={searchedTodos}
+        searchText={searchValue}
+        totalTodos={totalTodos}
+        onError={() => <TodosError />}
+        onLoading={() => <TodosLoading />}
+        onEmptyTodos={() => <EmptyTodos />}
+        onEmptySearchResults={
+          (searchText) => <p> No hay resultado para {searchText} </p>}
+        render={todo => (
+          <TodoItem
+            key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+            onComplete={() => completeTodo(todo.text)}
+            onDelete={() => deleteTodo(todo.text)}
+          />
+        )}
+
+        >
+
+        {/* {todo => (
+          <TodoItem
+            key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+            onComplete={() => completeTodo(todo.text)}
+            onDelete={() => deleteTodo(todo.text)}
+          />
+        )} */}
+        
+      </TodoList>
+
+      {/* <TodoList>
         {error && <p>Algo esta mal</p>}
         {loading && <p>Cargando web ...</p>}
         {!loading && !searchedTodos.length && <p>Escribe tú primer TO-DO</p>}
@@ -56,7 +94,7 @@ function App() {
             onDelete={() => deleteTodo(todo.text)}
           />
         ))}
-      </TodoList>
+      </TodoList> */}
 
       {!!openModal && (
       <Modal>

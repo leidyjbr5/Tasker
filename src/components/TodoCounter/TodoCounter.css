@@ -10,3 +10,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent
 }
+
+.TodoCounter--loading {
+  opacity: 25%;
+}
