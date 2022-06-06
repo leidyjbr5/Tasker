@@ -12,7 +12,7 @@ import { TodoForm } from '../components/TodoForm'
 import { EmptyTodos } from '../components/EmptyTodos'
 import { TodosError } from '../components/TodosError'
 import { TodosLoading } from '../components/TodosLoading'
-import { ChangeAlertWithStorageListener } from '../components/ChangeAlert'
+import { ChangeAlert } from '../components/ChangeAlert'
 
 function App() {
 
@@ -95,7 +95,7 @@ function App() {
         setOpenModal={setOpenModal}
       />
 
-      <ChangeAlertWithStorageListener 
+      <ChangeAlert
        sincronize={sincronizeTodos}
       />
     </React.Fragment>
