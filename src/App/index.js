@@ -12,6 +12,7 @@ import { TodoForm } from '../components/TodoForm'
 import { EmptyTodos } from '../components/EmptyTodos'
 import { TodosError } from '../components/TodosError'
 import { TodosLoading } from '../components/TodosLoading'
+import { ChangeAlertWithStorageListener } from '../components/ChangeAlert'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
     searchValue, 
     setSearchValue,
     addTodo,
+    sincronizeTodos,
   } = useTodos()
 
   return (
@@ -68,7 +70,7 @@ function App() {
 
         >
 
-        {/* {todo => (
+        {todo => (
           <TodoItem
             key={todo.text}
             text={todo.text}
@@ -76,25 +78,9 @@ function App() {
             onComplete={() => completeTodo(todo.text)}
             onDelete={() => deleteTodo(todo.text)}
           />
-        )} */}
+        )}
         
       </TodoList>
-
-      {/* <TodoList>
-        {error && <p>Algo esta mal</p>}
-        {loading && <p>Cargando web ...</p>}
-        {!loading && !searchedTodos.length && <p>Escribe tú primer TO-DO</p>}
-
-        {searchedTodos.map((todo) => (
-          <TodoItem
-            key={todo.text}
-            text={todo.text}
-            completed={todo.completed}
-            onComplete={() => completeTodo(todo.text)}
-            onDelete={() => deleteTodo(todo.text)}
-          />
-        ))}
-      </TodoList> */}
 
       {!!openModal && (
       <Modal>
@@ -107,6 +93,10 @@ function App() {
 
       <CreateTodoButton 
         setOpenModal={setOpenModal}
+      />
+
+      <ChangeAlertWithStorageListener 
+       sincronize={sincronizeTodos}
       />
     </React.Fragment>
   )
